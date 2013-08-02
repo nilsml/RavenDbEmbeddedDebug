@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RavenDbEmbeddedBug")]
+[assembly: AssemblyTitle("RavenDBTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RavenDbEmbeddedBug")]
+[assembly: AssemblyProduct("RavenDBTests")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("dbd3954d-d07d-4c9c-b138-cefe8c5e79f2")]
+[assembly: Guid("31a07400-031b-4577-96d4-90889683f497")]
 
 // Version information for an assembly consists of the following four values:
 //

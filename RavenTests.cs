@@ -5,7 +5,7 @@ using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Client.Linq;
 
-namespace RavenDbEmbeddedBug
+namespace RavenDBTests
 {
     class Foo
     {
@@ -38,6 +38,7 @@ namespace RavenDbEmbeddedBug
             {
                 session.Store(new Foo());
                 session.Store(new Foo());
+                session.SaveChanges();
             }
         }
 
@@ -48,11 +49,31 @@ namespace RavenDbEmbeddedBug
         }
 
         [Test]
-        public void Should_give_documents_where_ExpirationDate_is_null()
+        public void Should_give_documents_where_expirationdate_is_null()
         {
             using (var session = _documentStore.OpenSession())
             {
                 var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null).ToList();
+                Assert.That(bar.Count, Is.EqualTo(2));
+            }
+        }
+
+        [Test]
+        public void Should_give_documents_where_ExpirationDate_is_null_or_expirationdate_greater_than_today()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null || foo.ExpirationTime > DateTime.Now).ToList();
+                Assert.That(bar.Count, Is.EqualTo(2));
+            }
+        }
+
+        [Test]
+        public void Should_give_documents_where_ExpirationDate_is_null_or_expirationdate_greater_than_today_binary_operator()
+        {
+            using (var session = _documentStore.OpenSession())
+            {
+                var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null | foo.ExpirationTime > DateTime.Now).ToList();
                 Assert.That(bar.Count, Is.EqualTo(2));
             }
         }

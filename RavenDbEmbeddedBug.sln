@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenDBTests", "..\RavenDBTests\RavenDBTests.csproj", "{CB35EE2E-CC20-44B8-8912-8BC9F5C681EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenDBTests", "RavenDBTests.csproj", "{CB35EE2E-CC20-44B8-8912-8BC9F5C681EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,8 +24,8 @@ namespace RavenDBTests
     {
         private EmbeddableDocumentStore _documentStore;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        [SetUp]
+        public void SetUp()
         {
             _documentStore = new EmbeddableDocumentStore
                                  {
@@ -42,8 +42,8 @@ namespace RavenDBTests
             }
         }
 
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
+        [TearDown]
+        public void TearDown()
         {
             _documentStore.Dispose();
         }

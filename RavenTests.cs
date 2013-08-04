@@ -24,57 +24,38 @@ namespace RavenDBTests
     {
         private EmbeddableDocumentStore _documentStore;
 
-        [SetUp]
-        public void SetUp()
-        {
-            _documentStore = new EmbeddableDocumentStore
-                                 {
-                                     RunInMemory = true,
-                                     Conventions = { DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites }
-                                 };
-            _documentStore.Initialize();
 
-            using (var session = _documentStore.OpenSession())
-            {
-                session.Store(new Foo());
-                session.Store(new Foo());
-                session.SaveChanges();
-            }
-        }
 
-        [TearDown]
-        public void TearDown()
-        {
-            _documentStore.Dispose();
-        }
-
-        [Test]
-        public void Should_give_documents_where_expirationdate_is_null()
-        {
-            using (var session = _documentStore.OpenSession())
-            {
-                var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null).ToList();
-                Assert.That(bar.Count, Is.EqualTo(2));
-            }
-        }
 
         [Test]
         public void Should_give_documents_where_ExpirationDate_is_null_or_expirationdate_greater_than_today()
         {
-            using (var session = _documentStore.OpenSession())
+            using (var documentStore = new EmbeddableDocumentStore
+                                           {
+                                               RunInMemory = true,
+                                               Conventions =
+                                                   {
+                                                       DefaultQueryingConsistency =
+                                                           ConsistencyOptions.QueryYourWrites
+                                                   }
+                                           })
             {
-                var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null || foo.ExpirationTime > DateTime.Now).ToList();
-                Assert.That(bar.Count, Is.EqualTo(2));
-            }
-        }
+                documentStore.Initialize();
 
-        [Test]
-        public void Should_give_documents_where_ExpirationDate_is_null_or_expirationdate_greater_than_today_binary_operator()
-        {
-            using (var session = _documentStore.OpenSession())
-            {
-                var bar = session.Query<Foo>().Where(foo => foo.ExpirationTime == null | foo.ExpirationTime > DateTime.Now).ToList();
-                Assert.That(bar.Count, Is.EqualTo(2));
+                using (var session = documentStore.OpenSession())
+                {
+                    session.Store(new Foo());
+                    session.Store(new Foo());
+                    session.SaveChanges();
+                }
+                using (var session = documentStore.OpenSession())
+                {
+                    var bar =
+                        session.Query<Foo>()
+                               .Where(foo => foo.ExpirationTime == null || foo.ExpirationTime > DateTime.Now)
+                               .ToList();
+                    Assert.That(bar.Count, Is.EqualTo(2));
+                }
             }
         }
     }
